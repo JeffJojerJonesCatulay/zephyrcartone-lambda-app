@@ -1,0 +1,95 @@
+package org.zephyrcartone.ordering.entity;
+
+import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbBean;
+import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbPartitionKey;
+
+@DynamoDbBean
+public class OrderEntity {
+    private long orderId;
+    private long customerId;
+    private long itemId;
+    private String status;
+    private String createdBy;
+    private String creationDate;
+    private String updatedBy;
+    private String updateDate;
+
+    @DynamoDbPartitionKey
+    public long getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(long orderId) {
+        this.orderId = orderId;
+    }
+
+    public long getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(long customerId) {
+        this.customerId = customerId;
+    }
+
+    public long getItemId() {
+        return itemId;
+    }
+
+    public void setItemId(long itemId) {
+        this.itemId = itemId;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public String getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(String creationDate) {
+        this.creationDate = creationDate;
+    }
+
+    public String getUpdatedBy() {
+        return updatedBy;
+    }
+
+    public void setUpdatedBy(String updatedBy) {
+        this.updatedBy = updatedBy;
+    }
+
+    public String getUpdateDate() {
+        return updateDate;
+    }
+
+    public void setUpdateDate(String updateDate) {
+        this.updateDate = updateDate;
+    }
+
+    @Override
+    public String toString() {
+        return "OrderEntity{" +
+                "orderId=" + orderId +
+                ", customerId=" + customerId +
+                ", itemId=" + itemId +
+                ", status='" + status + '\'' +
+                ", createdBy='" + createdBy + '\'' +
+                ", creationDate='" + creationDate + '\'' +
+                ", updatedBy='" + updatedBy + '\'' +
+                ", updateDate='" + updateDate + '\'' +
+                '}';
+    }
+}
