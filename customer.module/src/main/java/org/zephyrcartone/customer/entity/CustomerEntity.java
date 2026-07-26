@@ -5,16 +5,16 @@ import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbParti
 
 @DynamoDbBean
 public class CustomerEntity {
-    private long customerId;
+    private String customerId;
     private String firstName, middleName, lastName, emailAddress, contactNo, mailingAddress;
     private String createdBy, creationDate, updatedBy, updateDate;
 
     @DynamoDbPartitionKey
-    public long getCustomerId() {
+    public String getCustomerId() {
         return customerId;
     }
 
-    public void setCustomerId(long customerId) {
+    public void setCustomerId(String customerId) {
         this.customerId = customerId;
     }
 

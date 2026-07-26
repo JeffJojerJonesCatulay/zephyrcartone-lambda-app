@@ -6,10 +6,17 @@ import org.zephyrcartone.customer.entity.CustomerEntity;
 import org.zephyrcartone.customer.utility.Constant;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedClient;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbTable;
+import software.amazon.awssdk.enhanced.dynamodb.Expression;
 import software.amazon.awssdk.enhanced.dynamodb.TableSchema;
+import software.amazon.awssdk.enhanced.dynamodb.model.PutItemEnhancedRequest;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 import software.amazon.awssdk.services.dynamodb.model.DynamoDbException;
+import software.amazon.awssdk.services.dynamodb.model.PutItemRequest;
+import software.amazon.awssdk.services.dynamodb.model.AttributeValue;
+import software.amazon.awssdk.services.dynamodb.model.PutItemResponse;
+
+import java.util.Map;
 
 public class CustomerRepository {
 
@@ -34,16 +41,23 @@ public class CustomerRepository {
 
     public String saveCustomer(CustomerEntity customer){
         try {
-            table.putItem(customer);
+            PutItemEnhancedRequest<CustomerEntity> putRequest =
+                    PutItemEnhancedRequest.builder(CustomerEntity.class)
+                            .item(customer)
+                            .conditionExpression(Expression.builder()
+                                    .expression("attribute_not_exists(customerId)")
+                                    .build())
+                            .build();
+
+            table.putItem(putRequest);
             ObjectMapper mapper = new ObjectMapper();
-            String jsonResponse = mapper.writeValueAsString(customer);
-            System.out.println("Order saved successfully!");
-            return jsonResponse;
+            System.out.println("Customer saved successfully!");
+            return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(customer);
         } catch (DynamoDbException e) {
-            System.err.println("Failed to save order DynamoDbException: " + e.getMessage());
+            System.err.println("Failed to save customer DynamoDbException: " + e.getMessage());
             throw e;
         } catch (JsonProcessingException e) {
-            System.err.println("Failed to save order JsonProcessingException: " + e.getMessage());
+            System.err.println("Failed to save customer JsonProcessingException: " + e.getMessage());
             throw new RuntimeException(e);
         }
     }
