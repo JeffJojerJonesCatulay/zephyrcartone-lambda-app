@@ -6,7 +6,9 @@ import org.zephyrcartone.ordering.entity.OrderEntity;
 import org.zephyrcartone.ordering.utility.Constant;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedClient;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbTable;
+import software.amazon.awssdk.enhanced.dynamodb.Expression;
 import software.amazon.awssdk.enhanced.dynamodb.TableSchema;
+import software.amazon.awssdk.enhanced.dynamodb.model.PutItemEnhancedRequest;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 import software.amazon.awssdk.services.dynamodb.model.DynamoDbException;
@@ -33,11 +35,18 @@ public class OrderRepository {
 
     public String saveOrder(OrderEntity order){
         try {
+            PutItemEnhancedRequest<OrderEntity> putRequest =
+                    PutItemEnhancedRequest.builder(OrderEntity.class)
+                            .item(order)
+                            .conditionExpression(Expression.builder()
+                                    .expression("attribute_not_exists(orderId)")
+                                    .build())
+                            .build();
+
             table.putItem(order);
             ObjectMapper mapper = new ObjectMapper();
-            String jsonResponse = mapper.writeValueAsString(order);
             System.out.println("Order saved successfully!");
-            return jsonResponse;
+            return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(order);
         } catch (DynamoDbException e) {
             System.err.println("Failed to save order DynamoDbException: " + e.getMessage());
             throw e;

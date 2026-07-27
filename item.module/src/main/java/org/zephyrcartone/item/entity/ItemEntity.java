@@ -1,36 +1,17 @@
-package org.zephyrcartone.ordering.entity;
+package org.zephyrcartone.item.entity;
 
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbBean;
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbPartitionKey;
 
 @DynamoDbBean
-public class OrderEntity {
-    private String orderId;
-    private String customerId;
-    private String itemId;
-    private String status;
+public class ItemEntity {
+    private String itemId, itemName, itemDescription, price, stock;
     private String createdBy;
     private String creationDate;
     private String updatedBy;
     private String updateDate;
 
     @DynamoDbPartitionKey
-    public String getOrderId() {
-        return orderId;
-    }
-
-    public void setOrderId(String orderId) {
-        this.orderId = orderId;
-    }
-
-    public String getCustomerId() {
-        return customerId;
-    }
-
-    public void setCustomerId(String customerId) {
-        this.customerId = customerId;
-    }
-
     public String getItemId() {
         return itemId;
     }
@@ -39,12 +20,36 @@ public class OrderEntity {
         this.itemId = itemId;
     }
 
-    public String getStatus() {
-        return status;
+    public String getItemName() {
+        return itemName;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setItemName(String itemName) {
+        this.itemName = itemName;
+    }
+
+    public String getItemDescription() {
+        return itemDescription;
+    }
+
+    public void setItemDescription(String itemDescription) {
+        this.itemDescription = itemDescription;
+    }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
+    }
+
+    public String getStock() {
+        return stock;
+    }
+
+    public void setStock(String stock) {
+        this.stock = stock;
     }
 
     public String getCreatedBy() {
@@ -81,11 +86,12 @@ public class OrderEntity {
 
     @Override
     public String toString() {
-        return "OrderEntity{" +
-                "orderId=" + orderId +
-                ", customerId=" + customerId +
-                ", itemId=" + itemId +
-                ", status='" + status + '\'' +
+        return "ItemEntity{" +
+                "itemId='" + itemId + '\'' +
+                ", itemName='" + itemName + '\'' +
+                ", itemDescription='" + itemDescription + '\'' +
+                ", price='" + price + '\'' +
+                ", stock='" + stock + '\'' +
                 ", createdBy='" + createdBy + '\'' +
                 ", creationDate='" + creationDate + '\'' +
                 ", updatedBy='" + updatedBy + '\'' +
