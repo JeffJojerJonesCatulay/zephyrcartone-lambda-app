@@ -44,4 +44,12 @@ public class CustomerServiceImpl implements CustomerService {
 
         return repository.saveCustomer(customer);
     }
+
+    @Override
+    public String getCustomerData(String customerId) {
+        Validations validations = new Validations();
+        validations.validateString(customerId);
+
+        return repository.getCustomer(customerId);
+    }
 }

@@ -61,4 +61,24 @@ public class CustomerRepository {
             throw new RuntimeException(e);
         }
     }
+
+    public String getCustomer(String customerId) {
+        try {
+            CustomerEntity customer = table.getItem(r -> r.key(k -> k.partitionValue(customerId)));
+            ObjectMapper mapper = new ObjectMapper();
+
+            if (customer == null){
+                throw new RuntimeException("NO RECORD FOUND");
+            } else {
+                System.out.println("Customer retrieved successfully!");
+                return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(customer);
+            }
+        } catch (DynamoDbException e) {
+            System.err.println("Failed to retrieve customer DynamoDbException: " + e.getMessage());
+            throw e;
+        } catch (JsonProcessingException e) {
+            System.err.println("Failed to retrieve customer JsonProcessingException: " + e.getMessage());
+            throw new RuntimeException(e);
+        }
+    }
 }

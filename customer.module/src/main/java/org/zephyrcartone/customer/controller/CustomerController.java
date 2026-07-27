@@ -9,4 +9,8 @@ public class CustomerController {
     public String createCustomer(CustomerEntity customer){
         return service.saveCustomerData(customer);
     }
+
+    public String getCustomer(String customerId){
+        return service.getCustomerData(customerId);
+    }
 }
