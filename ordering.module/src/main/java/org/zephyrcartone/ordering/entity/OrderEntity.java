@@ -5,9 +5,9 @@ import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbParti
 
 @DynamoDbBean
 public class OrderEntity {
-    private long orderId;
-    private long customerId;
-    private long itemId;
+    private String orderId;
+    private String customerId;
+    private String itemId;
     private String status;
     private String createdBy;
     private String creationDate;
@@ -15,27 +15,27 @@ public class OrderEntity {
     private String updateDate;
 
     @DynamoDbPartitionKey
-    public long getOrderId() {
+    public String getOrderId() {
         return orderId;
     }
 
-    public void setOrderId(long orderId) {
+    public void setOrderId(String orderId) {
         this.orderId = orderId;
     }
 
-    public long getCustomerId() {
+    public String getCustomerId() {
         return customerId;
     }
 
-    public void setCustomerId(long customerId) {
+    public void setCustomerId(String customerId) {
         this.customerId = customerId;
     }
 
-    public long getItemId() {
+    public String getItemId() {
         return itemId;
     }
 
-    public void setItemId(long itemId) {
+    public void setItemId(String itemId) {
         this.itemId = itemId;
     }
 
