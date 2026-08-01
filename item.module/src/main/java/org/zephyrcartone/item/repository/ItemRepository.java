@@ -23,28 +23,25 @@ public class ItemRepository {
                 .region(region)
                 .build();
 
-        DynamoDbEnhancedClient enhancedClient =
-                DynamoDbEnhancedClient.builder()
-                        .dynamoDbClient(client)
-                        .build();
+        DynamoDbEnhancedClient enhancedClient = DynamoDbEnhancedClient.builder()
+                .dynamoDbClient(client)
+                .build();
 
         this.table = enhancedClient.table(
                 Constant.ITEMS_TABLE_NAME,
-                TableSchema.fromBean(ItemEntity.class)
-        );
+                TableSchema.fromBean(ItemEntity.class));
     }
 
-    public String saveItem(ItemEntity item){
+    public String saveItem(ItemEntity item) {
         try {
-            PutItemEnhancedRequest<ItemEntity> putRequest =
-                    PutItemEnhancedRequest.builder(ItemEntity.class)
-                            .item(item)
-                            .conditionExpression(Expression.builder()
-                                    .expression("attribute_not_exists(itemId)")
-                                    .build())
-                            .build();
+            PutItemEnhancedRequest<ItemEntity> putRequest = PutItemEnhancedRequest.builder(ItemEntity.class)
+                    .item(item)
+                    .conditionExpression(Expression.builder()
+                            .expression("attribute_not_exists(itemId)")
+                            .build())
+                    .build();
 
-            table.putItem(item);
+            table.putItem(putRequest);
             ObjectMapper mapper = new ObjectMapper();
             System.out.println("Item saved successfully!");
             return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(item);
@@ -62,7 +59,7 @@ public class ItemRepository {
             ItemEntity item = table.getItem(r -> r.key(k -> k.partitionValue(itemId)));
             ObjectMapper mapper = new ObjectMapper();
 
-            if (itemId == null){
+            if (itemId == null) {
                 throw new RuntimeException("NO RECORD FOUND");
             } else {
                 System.out.println("Customer retrieved successfully!");

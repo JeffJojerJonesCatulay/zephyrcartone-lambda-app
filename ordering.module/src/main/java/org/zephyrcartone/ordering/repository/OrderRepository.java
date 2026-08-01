@@ -22,28 +22,25 @@ public class OrderRepository {
                 .region(region)
                 .build();
 
-        DynamoDbEnhancedClient enhancedClient =
-                DynamoDbEnhancedClient.builder()
-                        .dynamoDbClient(client)
-                        .build();
+        DynamoDbEnhancedClient enhancedClient = DynamoDbEnhancedClient.builder()
+                .dynamoDbClient(client)
+                .build();
 
         this.table = enhancedClient.table(
                 Constant.ORDERS_TABLE_NAME,
-                TableSchema.fromBean(OrderEntity.class)
-        );
+                TableSchema.fromBean(OrderEntity.class));
     }
 
-    public String saveOrder(OrderEntity order){
+    public String saveOrder(OrderEntity order) {
         try {
-            PutItemEnhancedRequest<OrderEntity> putRequest =
-                    PutItemEnhancedRequest.builder(OrderEntity.class)
-                            .item(order)
-                            .conditionExpression(Expression.builder()
-                                    .expression("attribute_not_exists(orderId)")
-                                    .build())
-                            .build();
+            PutItemEnhancedRequest<OrderEntity> putRequest = PutItemEnhancedRequest.builder(OrderEntity.class)
+                    .item(order)
+                    .conditionExpression(Expression.builder()
+                            .expression("attribute_not_exists(orderId)")
+                            .build())
+                    .build();
 
-            table.putItem(order);
+            table.putItem(putRequest);
             ObjectMapper mapper = new ObjectMapper();
             System.out.println("Order saved successfully!");
             return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(order);
@@ -61,7 +58,7 @@ public class OrderRepository {
             OrderEntity order = table.getItem(r -> r.key(k -> k.partitionValue(orderId)));
             ObjectMapper mapper = new ObjectMapper();
 
-            if (order == null){
+            if (order == null) {
                 throw new RuntimeException("NO RECORD FOUND");
             } else {
                 System.out.println("order retrieved successfully!");
