@@ -37,4 +37,12 @@ public class OrderServiceImpl implements OrderService {
 
         return repository.saveOrder(order);
     }
+
+    @Override
+    public String getOrderData(String orderId) {
+        Validations validations = new Validations();
+        validations.validateString(orderId);
+
+        return repository.getOrder(orderId);
+    }
 }

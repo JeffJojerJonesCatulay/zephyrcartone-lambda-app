@@ -9,4 +9,8 @@ public class OrderController {
     public String createOrder(OrderEntity order){
         return service.saveOrderData(order);
     }
+
+    public String getOrder(OrderEntity order){
+        return service.getOrderData(order.getOrderId());
+    }
 }

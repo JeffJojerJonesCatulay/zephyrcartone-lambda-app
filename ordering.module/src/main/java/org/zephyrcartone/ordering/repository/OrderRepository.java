@@ -55,4 +55,24 @@ public class OrderRepository {
             throw new RuntimeException(e);
         }
     }
+
+    public String getOrder(String orderId) {
+        try {
+            OrderEntity order = table.getItem(r -> r.key(k -> k.partitionValue(orderId)));
+            ObjectMapper mapper = new ObjectMapper();
+
+            if (order == null){
+                throw new RuntimeException("NO RECORD FOUND");
+            } else {
+                System.out.println("order retrieved successfully!");
+                return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(order);
+            }
+        } catch (DynamoDbException e) {
+            System.err.println("Failed to retrieve order DynamoDbException: " + e.getMessage());
+            throw e;
+        } catch (JsonProcessingException e) {
+            System.err.println("Failed to retrieve order JsonProcessingException: " + e.getMessage());
+            throw new RuntimeException(e);
+        }
+    }
 }
