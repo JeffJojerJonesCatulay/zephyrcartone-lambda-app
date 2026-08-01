@@ -9,6 +9,8 @@ public class OrderEntity {
     private String customerId;
     private String itemId;
     private String status;
+    private String paymentMode;
+    private String paymentStatus;
     private String createdBy;
     private String creationDate;
     private String updatedBy;
@@ -47,6 +49,22 @@ public class OrderEntity {
         this.status = status;
     }
 
+    public String getPaymentMode() {
+        return paymentMode;
+    }
+
+    public void setPaymentMode(String paymentMode) {
+        this.paymentMode = paymentMode;
+    }
+
+    public String getPaymentStatus() {
+        return paymentStatus;
+    }
+
+    public void setPaymentStatus(String paymentStatus) {
+        this.paymentStatus = paymentStatus;
+    }
+
     public String getCreatedBy() {
         return createdBy;
     }
@@ -82,10 +100,12 @@ public class OrderEntity {
     @Override
     public String toString() {
         return "OrderEntity{" +
-                "orderId=" + orderId +
-                ", customerId=" + customerId +
-                ", itemId=" + itemId +
+                "orderId='" + orderId + '\'' +
+                ", customerId='" + customerId + '\'' +
+                ", itemId='" + itemId + '\'' +
                 ", status='" + status + '\'' +
+                ", paymentMode='" + paymentMode + '\'' +
+                ", paymentStatus='" + paymentStatus + '\'' +
                 ", createdBy='" + createdBy + '\'' +
                 ", creationDate='" + creationDate + '\'' +
                 ", updatedBy='" + updatedBy + '\'' +

@@ -10,7 +10,7 @@ public class ItemController {
         return service.saveItemData(item);
     }
 
-    public String getItem(String itemId){
-        return service.getItemData(itemId);
+    public String getItem(ItemEntity item){
+        return service.getItemData(item.getItemId());
     }
 }

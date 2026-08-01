@@ -10,7 +10,7 @@ public class CustomerController {
         return service.saveCustomerData(customer);
     }
 
-    public String getCustomer(String customerId){
-        return service.getCustomerData(customerId);
+    public String getCustomer(CustomerEntity customer){
+        return service.getCustomerData(customer.getCustomerId());
     }
 }
